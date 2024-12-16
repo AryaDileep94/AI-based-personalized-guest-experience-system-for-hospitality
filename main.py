@@ -1,32 +1,39 @@
 import pandas as pd
 
-# Sample guest data
+# Guest feedback data
 data = {
-    'Guest_ID': [1, 2, 3],
-    'Name': ['John', 'Jane', 'Doe'],
-    'Preferred_Room': ['Suite', 'Deluxe', 'Standard'],
-    'Loyalty_Member': [True, False, True],
-    'Age': [34, 28, 45]
+    'guest_id': ['G12345', 'G12346', 'G12347'],
+    'guest_name': ['Nithya', 'Arun', 'Tara'],
+    'feedback': [
+        'The room was clean and the service was great.',
+        'The check-in process was slow, and the staff was unhelpful.',
+        'The room was okay, nothing special. The food was average.'
+    ],
+    'sentiment': ['Positive', 'Negative', 'Neutral']
 }
 
 # Convert the data into a pandas DataFrame
 df = pd.DataFrame(data)
 
-# Simple personalization function
+# Simple function to process the feedback
 def personalize_guest_experience(df):
     for index, row in df.iterrows():
-        if row['Loyalty_Member']:
-            print(f"Welcome back, {row['Name']}! Enjoy your complimentary upgrade to a VIP room.")
-        else:
-            print(f"Hello {row['Name']}, thank you for choosing us. We recommend trying our deluxe room next time!")
+        print(f"\nFeedback for {row['guest_name']} (ID: {row['guest_id']}):")
+        print(f"Original feedback: {row['feedback']}")
 
-        # Customize based on age (just an example)
-        if row['Age'] > 40:
-            print(f"Since you're over 40, we recommend a more relaxing experience, like a spa package.\n")
+        # Personalized message based on sentiment
+        if row['sentiment'] == 'Positive':
+            print(f"Thank you, {row['guest_name']}! We're glad you had a great experience.")
+        elif row['sentiment'] == 'Negative':
+            print(f"Sorry to hear that, {row['guest_name']}. We'll work on improving our service.")
         else:
-            print(f"Feel free to explore our adventure packages for a more exciting stay!\n")
+            print(f"Thanks for your feedback, {row['guest_name']}. We're always looking to improve.")
+
+        print("\n---\n")
 
 if __name__ == "__main__":
     personalize_guest_experience(df)
+
+
 
 

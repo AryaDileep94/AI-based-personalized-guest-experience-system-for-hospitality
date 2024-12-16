@@ -1,0 +1,4 @@
+guest_id,guest_name,feedback,sentiment
+G12345,Nithya,"The room was clean and the service was great. I will definitely come back!",Positive
+G12346,Arun,"The check-in process was slow, and the staff was unhelpful. Very disappointed.",Negative
+G12347,Tara,"The room was okay, nothing special. The food was average.",Neutral
