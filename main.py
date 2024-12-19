@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import faker
 import random
 from collections import defaultdict
@@ -95,6 +96,80 @@ data['review_text'] = data['review_text'].fillna('')
 # Save the updated dataset to a new CSV file
 data.to_csv("updated_booking_reviews_v2.csv", index=False)
 
-
 # Display first few rows to verify
 print(data[['reviewed_by', 'customer_email']].head())
+
+
+# Load the updated dataset
+dataset_path = "updated_booking_reviews_v2.csv"
+df = pd.read_csv(dataset_path)
+
+# Add new preference columns with default values (e.g., 'Not Specified')
+preference_columns = ['Dining', 'Sports', 'Wellness', 'Payment Options', 'Events', 'Room Preference', 'Pricing']
+for column in preference_columns:
+    df[column] = 'Not Specified'  # Default value for new columns
+
+# Save the updated dataset with new columns
+updated_dataset_path = "updated_with_preferences.csv"
+df.to_csv(updated_dataset_path, index=False)
+
+print(f"Preferences columns added successfully. Updated dataset saved as {updated_dataset_path}.")
+
+#filling preference columns by analyzing review_text,review_title and ratings by using NLP and conditional logic to map value
+# Define keyword mapping with specific details
+preference_details = {
+    'Dining': [('vegan', 'vegan menu'), ('vegetarian', 'vegetarian options'), ('breakfast', 'complimentary breakfast')],
+    'Sports': [('gym', 'gym access'), ('swimming', 'swimming pool'), ('tennis', 'tennis court')],
+    'Wellness': [('spa', 'spa treatments'), ('relaxing', 'relaxing environment'), ('massage', 'massage services')],
+    'Payment Options': [('card', 'card payments'), ('cash', 'cash only'), ('wallet', 'digital wallets')],
+    'Events': [('wedding', 'wedding arrangements'), ('conference', 'conference rooms'), ('party', 'party halls')],
+    'Room Preference': [('suite', 'suite room'), ('balcony', 'room with balcony'), ('ocean', 'ocean view')],
+    'Pricing': [('expensive', 'luxury'), ('cheap', 'budget-friendly'), ('value', 'value for money')]
+}
+# Fallback random values for missing preferences
+fallback_preferences = {
+    'Dining': ['vegan menu', 'continental breakfast', 'dinner buffet'],
+    'Sports': ['gym access', 'swimming pool', 'tennis court'],
+    'Wellness': ['spa treatments', 'relaxing environment', 'yoga classes'],
+    'Payment Options': ['card payments', 'digital wallets', 'cash only'],
+    'Events': ['wedding arrangements', 'party halls', 'conference facilities'],
+    'Room Preference': ['suite room', 'ocean view', 'room with balcony'],
+    'Pricing': ['luxury', 'value for money', 'budget-friendly']
+}
+
+
+# Function to assign preferences based on reviews
+def assign_preferences(row):
+    for column, keywords in preference_details.items():
+        # Check if keywords match in review text or title
+        for keyword, detail in keywords:
+            if keyword in str(row['review_text']).lower() or keyword in str(row['review_title']).lower():
+                row[column] = detail  # Assign specific detail
+                break
+        # If no match, assign a random fallback value
+        if row[column] == 'Not Specified':
+            row[column] = random.choice(fallback_preferences[column])
+    return row
+
+# Apply the function to fill preferences
+df = df.apply(assign_preferences, axis=1)
+
+# Randomly introduce "No Preference" in some cells
+def introduce_no_preference(row):
+    # Randomly decide how many and which columns to set to "No Preference"
+    columns_to_alter = random.sample(preference_columns, k=random.randint(0, len(preference_columns)))
+    for column in columns_to_alter:
+        row[column] = "No Preference"
+    return row
+
+# Apply the function to introduce "No Preference"
+df = df.apply(introduce_no_preference, axis=1)
+
+# Save the updated dataset
+updated_dataset_path = "updated_with_detailed_preferences_and_no_preference.csv"
+df.to_csv(updated_dataset_path, index=False)
+
+print(f"Preferences updated with details and 'No Preference' introduced. Dataset saved to {updated_dataset_path}.")
+
+
+
