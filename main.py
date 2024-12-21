@@ -50,7 +50,7 @@ data = data.dropna(subset=['rating', 'review_text'])
 print(data[['rating', 'review_text']].head()) 
 
 # Drop the specified columns
-columns_to_drop = ['images', 'crawled_at', 'url', 'hotel_url', 'avg_rating', 'raw_review_text', 'meta']
+columns_to_drop = ['images', 'crawled_at', 'url','hotel_name', 'hotel_url', 'avg_rating', 'raw_review_text', 'meta']
 data.drop(columns=columns_to_drop, inplace=True)
 data = data.dropna(subset=['review_title'])
 
@@ -90,6 +90,7 @@ data.to_csv("updated_booking_reviews_v2.csv", index=False)
 
 # Display first few rows to verify
 print(data[['reviewed_by', 'customer_email']].head())
+
 
 # Load the updated dataset
 dataset_path = "updated_booking_reviews_v2.csv"
@@ -150,6 +151,14 @@ def introduce_no_preference(row):
 
 # Apply the function to introduce "No Preference"
 df = df.apply(introduce_no_preference, axis=1)
+
+# Add new columns and fill them with values
+df['Membership Status'] = df['Pricing'].apply(lambda x: random.choice(
+    ['Golden Membership', 'Platinum Membership'] if 'luxury' in x else 
+    ['Silver Membership', 'No Membership']))
+
+df['Customer Age'] = df['Pricing'].apply(lambda x: random.randint(30, 50) if 'luxury' in x else random.randint(25, 40))
+df['Total Guests'] = df['Pricing'].apply(lambda _: random.choices(range(1, 11), weights=[70, 20, 5, 3, 2] + [0.2]*5, k=1)[0])
 
 # Save the updated dataset
 updated_dataset_path = "updated_with_detailed_preferences_and_no_preference.csv"
