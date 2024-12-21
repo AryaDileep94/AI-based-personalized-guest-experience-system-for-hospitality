@@ -27,9 +27,7 @@ data['reviewed_by'] = data['reviewed_by'].apply(lambda x: x if pd.notnull(x) els
 # Verify the changes
 print(data[['reviewed_by', 'review_text']].head())  # Check the first few rows
 
-# Save the updated dataset to a new CSV file
-data.to_csv('modified_booking_reviews.csv', index=False)
-
+print(data.isnull().sum())
 
 # Fill missing 'reviewed_at' values with 'Unknown'
 data['reviewed_at'] = data['reviewed_at'].fillna('Unknown')
@@ -56,17 +54,16 @@ columns_to_drop = ['images', 'crawled_at', 'url', 'hotel_url', 'avg_rating', 'ra
 data.drop(columns=columns_to_drop, inplace=True)
 data = data.dropna(subset=['review_title'])
 
-
-
 # Verify the changes by checking the columns
 print(data.columns)
-
-
 # Check for missing values in the dataset
 missing_values = data.isnull().sum()
 
 # Display the number of missing values per column
 print(missing_values)
+
+# Save the updated dataset to a new CSV file
+data.to_csv('modified_booking_reviews.csv', index=False)
 
 # Load your dataset
 data = pd.read_csv("modified_booking_reviews.csv")
@@ -85,11 +82,6 @@ def generate_unique_email(name):
 # Apply the function to create the email column
 data['customer_email'] = data['reviewed_by'].apply(generate_unique_email)
 
-# Drop the specified columns
-columns_to_drop = ['images', 'crawled_at', 'url', 'hotel_url', 'avg_rating', 'raw_review_text', 'meta']
-data.drop(columns=columns_to_drop, inplace=True)
-data = data.dropna(subset=['review_title'])
-
 # Replace NaN or float values with an empty string
 data['review_text'] = data['review_text'].fillna('')
 
@@ -99,7 +91,6 @@ data.to_csv("updated_booking_reviews_v2.csv", index=False)
 # Display first few rows to verify
 print(data[['reviewed_by', 'customer_email']].head())
 
-
 # Load the updated dataset
 dataset_path = "updated_booking_reviews_v2.csv"
 df = pd.read_csv(dataset_path)
@@ -108,12 +99,7 @@ df = pd.read_csv(dataset_path)
 preference_columns = ['Dining', 'Sports', 'Wellness', 'Payment Options', 'Events', 'Room Preference', 'Pricing']
 for column in preference_columns:
     df[column] = 'Not Specified'  # Default value for new columns
-
-# Save the updated dataset with new columns
-updated_dataset_path = "updated_with_preferences.csv"
-df.to_csv(updated_dataset_path, index=False)
-
-print(f"Preferences columns added successfully. Updated dataset saved as {updated_dataset_path}.")
+print(f"Preferences columns added successfully.")
 
 #filling preference columns by analyzing review_text,review_title and ratings by using NLP and conditional logic to map value
 # Define keyword mapping with specific details
@@ -170,6 +156,12 @@ updated_dataset_path = "updated_with_detailed_preferences_and_no_preference.csv"
 df.to_csv(updated_dataset_path, index=False)
 
 print(f"Preferences updated with details and 'No Preference' introduced. Dataset saved to {updated_dataset_path}.")
+
+
+
+
+
+
 
 
 
