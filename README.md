@@ -16,7 +16,7 @@ The AI-driven Guest Personalization System is designed to enhance the guest expe
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/AI-based-personalized-guest-experience-system.git
+   git clone https://github.com/AryaDileep94/AI-based-personalized-guest-experience-system-for-hospitality
    cd AI-based-personalized-guest-experience-system
 2. Install dependencies
    pip install -r requirements.txt
@@ -31,19 +31,19 @@ The AI-driven Guest Personalization System is designed to enhance the guest expe
 This system is designed to analyze guest feedback and provide suggestions in real-time.Alerts are sent to the hotel via email for every negative reviews along with the reason. As the model analyzes the review_text as well as the guest preferences, the system is able to provide more personalized suggestions and reccomendations. Hotel staff and management receive actionable insights in real time, helping them address issues proactively and custom services to individual needs. It can be easily integrated with existing CRM systems, making it adaptable to various hospitality businesses.
 
 # Project Structure
-**guest_UI.py**: The Streamlit-based frontend for user interaction.
-**sentiment_label.py**: Backend for performing sentiment analysis, handling email alerts and providing real-time sugestions in the UI
-**main.py**:Booking reviews dataset is prepared for analysis.Handling missing values, removed unwanted columns and added new columns which contains guest preferences.
-**eda.py**: simple EDA is performed on the cleaned dataset
-**.groqenv**: Contains sensitive API keys and email credentials (excluded from Git).
-**requirements.txt**: Lists all dependencies required for the project.
+1. guest_UI.py: The Streamlit-based frontend for user interaction.
+2. sentiment_label.py: Backend for performing sentiment analysis, handling email alerts and providing real-time sugestions in the UI
+3. main.py:Booking reviews dataset is prepared for analysis.Handling missing values, removed unwanted columns and added new columns which contains guest preferences.
+4. eda.py: simple EDA is performed on the cleaned dataset
+5. .groqenv: Contains sensitive API keys and email credentials (excluded from Git).
+6. requirements.txt: Lists all dependencies required for the project.
 
 # Technologies Used
-Python
-Streamlit
-Groq API Key
-SMTP for email alerts(The email alert system leverages Python's built-in smtplib and email modules for secure SMTP communication. No additional installation is required unless you wish to use an external library such as yagmail, which can simplify email handling.)
-Large Language Models (LLMs) for advanced sentiment analysis (llama-3.3-70b-versatile)
+-Python
+-Streamlit
+-Groq API Key
+-SMTP for email alerts(The email alert system leverages Python's built-in smtplib and email modules for secure SMTP communication. No additional installation is required unless you wish to use an external library such as yagmail, which can simplify email handling.)
+-Large Language Models (LLMs) for advanced sentiment analysis (llama-3.3-70b-versatile)
    
   
    
