@@ -1,0 +1,96 @@
+index,review_title,reviewed_at,reviewed_by,nationality,rating,review_text,tags,customer_email,Dining,Sports,Wellness,Payment Options,Events,Room Preference,Pricing,Membership Status,Customer Age,Total Guests,sentiment,suggestion
+0,Exceptional,11 July 2021,Kyrylo,Poland,10.0,"Everything was perfect! Quite, cozy place to relax.",Business trip~Solo traveller~Junior Suite~Stayed 1 night~Submitted via mobile,kyrylo1@example.com,No Preference,No Preference,yoga classes,No Preference,No Preference,No Preference,No Preference,Silver Membership,36,1,Neutral,"Sentiment: Positive
+
+Response: Thank you for sharing your wonderful experience with us. We're thrilled to hear that you found our hotel to be a quiet and cozy place to relax. We're glad you had a perfect stay and were able to unwind in a peaceful environment. If you're looking to escape and relax again, we'd be happy to offer you a special discount on your next visit. Would you like us to notify you about upcoming promotions and packages tailored to your relaxation needs?"
+1,I highly recommend this b&b! We enjoyed it a lot!,24 November 2019,Dimitri,Belgium,9.0,Very friendly host and perfect breakfast!,Leisure trip~Couple~Deluxe Suite~Stayed 1 night~Submitted via mobile,dimitri1@example.com,No Preference,No Preference,No Preference,cash only,wedding arrangements,No Preference,value for money,No Membership,38,1,Neutral,"Sentiment: Positive
+
+Response: Thank you for appreciating our hospitality and breakfast options! We're glad you had a wonderful stay with us. Our friendly hosts strive to provide exceptional service, and we're happy to hear that you enjoyed your breakfast. Would you like to book with us again or explore our special packages for your next visit?"
+2,Exceptional,3 January 2020,Virginia,United Kingdom,10.0,"It was just what we wanted for a week by the beach in winter,
+
+Location was fab, apartment quiet and very well-equipped. Spotless clean.",Leisure trip~Couple~Apartment with Sea View~Stayed 6 nights~Submitted via mobile,virginia1@example.com,No Preference,tennis court,spa treatments,cash only,No Preference,No Preference,No Preference,Silver Membership,38,1,Neutral,"Sentiment: Positive
+
+Response: Thank you for choosing our beachfront apartments for your winter getaway. We're thrilled to hear that our location and amenities met your expectations. It's great to know that you found your apartment to be quiet, well-equipped, and spotless clean. We hope you had a wonderful time relaxing by the beach. If you're planning another trip, we'd be happy to offer you a loyalty discount or help you explore other properties in our portfolio that fit your preferences."
+3,My stay in the house was a experiencing bliss in luxury. The house is sheer touch of beauty wrapped,8 September 2019,Kannan,Netherlands,10.0,My stay in the house was a experiencing bliss in luxury. The house is sheer touch of beauty wrapped by luxury and complimented with kindness and care  from Lisbette & her parents making it a most remarkable stay.,Business trip~Solo traveller~Junior Suite~Stayed 4 nights~Submitted via mobile,kannan1@example.com,No Preference,No Preference,No Preference,No Preference,No Preference,No Preference,budget-friendly,No Membership,35,2,Neutral,"Sentiment: Positive
+
+Response: Thank you for your heartfelt review! We're thrilled to hear that your stay with us was a truly luxurious and memorable experience. Lisbette and her parents are delighted to have been able to provide you with exceptional care and kindness. We're glad you appreciated the beauty and luxury of our house. If you're looking to recreate this experience, we'd be happy to help you plan your next stay or recommend similar accommodations that cater to your love of luxury and exceptional hospitality."
+4,"One bedroom apartment with wonderful view and free, secure parking, but not close enough  to the main beach area.",23 June 2019,Sue,South Africa,9.2,"The building itself has a very musty smell in the hallway (despite being built in 1988), but the apartment itself smells good, which makes it bearable. 
+When showering, the hot water goes off every 2-3 minutes for about 20-30 seconds and then only cold water comes out. The hot water then comes back again. This should be checked out. That is the only thing we didn’t like about the apartment. ,
+
+The view was great, the apartment furnished in a modern style and equipped with everything you may need. The apartment was clean. 
+There is free, secure parking outside in the building’s parking lot or downstairs in the garage. 
+Jan always responded promptly to all messages sent via Booking.com messenger.",Leisure trip~People with friends~Apartment with Sea View~Stayed 4 nights~Submitted via mobile,sue1@example.com,continental breakfast,tennis court,yoga classes,digital wallets,wedding arrangements,ocean view,budget-friendly,Silver Membership,25,1,Neutral,"Sentiment: Neutral
+
+The guest has provided a mixed review, mentioning both positive and negative aspects of their stay. On the positive side, they appreciated the modern style and cleanliness of the apartment, the great view, and the convenient parking options. They also praised Jan's prompt responses to their messages. However, they were dissatisfied with the musty smell in the hallway and the issue with the hot water in the shower.
+
+Response:
+Thank you for sharing your feedback about your stay with us. We"
+5,Fantastic! Beautiful home with a gracious welcoming hostess,6 June 2019,Nicola,United Kingdom,10.0,"Nothing,
+
+Beautiful home! Great room, most comfortable bed! The hostess couldn’t do enough for you.  Very gracious and welcoming, even gave my husband a lift to his conference.  Thank you for your generous hospitality.  Would stay here again.",Business trip~Couple~Junior Suite~Stayed 1 night~Submitted via mobile,nicola1@example.com,vegan menu,tennis court,spa treatments,digital wallets,conference rooms,suite room,luxury,Golden Membership,49,1,Neutral,"Sentiment: Positive
+
+Response: Thank you so much for your kind words and for appreciating our hospitality! We're thrilled to hear that you enjoyed your stay, found the bed comfortable, and received exceptional service from our hostess. It's great to know that we could make your stay special and convenient, even with the extra touch of providing a lift to your husband's conference. We would be delighted to welcome you back and provide the same level of service on your next visit. Would you like"
+6,"everything perfect, great bath in the room!",14 June 2021,Macıej,Poland,10.0,"to many messages sending from the owner in the app. But it is only my filling.,
+
+everything great! perfect location, perfect room, very clean, everything what you need inside, but the best of the best is the bath :)",Business trip~Couple~Deluxe Double Room with Bath~Stayed 1 night~Submitted via mobile,macıej1@example.com,No Preference,No Preference,relaxing environment,cash only,No Preference,No Preference,No Preference,Silver Membership,28,4,Neutral,"Sentiment: Positive
+
+Although the guest mentions a minor issue with receiving too many messages from the owner, they explicitly state that it's just their personal feeling and go on to express their overall satisfaction with their stay. They use superlatives such as ""perfect"" and ""the best of the best"" to describe the location, room, and bath, indicating a strong positive sentiment.
+
+Response:
+Thank you for your wonderful review! We're thrilled to hear that you enjoyed your stay, particularly the perfect"
+7,Very good,3 August 2019,Hpvdh,Netherlands,8.3,"Spacious, more than enough rooms, a lot of bath rooms. For electric car drivers, free charging at the Lidl in Givet, only 10 kms, 50 KW.",Leisure trip~Family with young children~Four-Bedroom House~Stayed 7 nights~Submitted via mobile,hpvdh1@example.com,dinner buffet,No Preference,spa treatments,cash only,wedding arrangements,No Preference,value for money,No Membership,25,2,Neutral,"Based on the review, the sentiment is positive. The guest appreciates the spaciousness of the hotel, the number of rooms, and the abundance of bathrooms. They also provide helpful information for fellow electric car drivers, indicating a sense of community and satisfaction with their stay.
+
+Response:
+Thank you for sharing your positive experience with us! We're glad you enjoyed the spaciousness and amenities of our hotel. We appreciate you taking the time to inform other guests about the convenient free electric car charging option nearby."
+8,Superb,24 March 2019,Zoe,United Kingdom,9.2,There are no comments available for this review,Leisure trip~Couple~Apartment with Sea View~Stayed 3 nights~Submitted via mobile,zoe1@example.com,No Preference,No Preference,No Preference,card payments,party halls,suite room,luxury,Platinum Membership,46,1,Neutral,"Sentiment: Neutral
+Response: We appreciate you taking the time to provide your preferences. Unfortunately, we didn't receive any comments from your review. If you'd like to share your experience or provide feedback, we're here to listen and help. Please feel free to contact us directly, and we'll be happy to assist you."
+9,highly recommended,6 June 2019,Richard,United States,10.0,"nothing -- place was perfect,
+
+This is an excellent place to stay and I highly recommend staying there. The stay is extremely helpful. One of the best places I have stayed -- it is that good.",Business trip~Group~Deluxe Suite~Stayed 1 night,richard1@example.com,No Preference,No Preference,No Preference,digital wallets,No Preference,suite room,No Preference,Silver Membership,40,1,Neutral,"Sentiment: Positive
+
+Response: Thank you so much for your wonderful review! We're thrilled to hear that your stay was perfect and that you highly recommend our hotel. We're glad you found our staff extremely helpful and that we could exceed your expectations. As one of our valued guests, we'd like to invite you to explore our loyalty program, which offers exclusive benefits and rewards for your future stays. We can't wait to welcome you back and provide another exceptional experience!"
+10,Super romantic venue in a cosy town.,25 January 2021,Marie-louise,Belgium,10.0,Romantic room just around the corner from the train station.  Nice and different setting from most rooms with cute details. Excellent internet connection and Netflix available.,Leisure trip~Couple~Deluxe Double Room with Bath~Stayed 2 nights~Submitted via mobile,marie-louise1@example.com,No Preference,swimming pool,No Preference,No Preference,No Preference,ocean view,No Preference,Silver Membership,28,1,Neutral,"Sentiment: Positive
+
+Response: Thank you for appreciating the unique touches in our romantic room and the convenience of its location near the train station. We're glad you enjoyed the excellent internet connection and entertainment options like Netflix. We'll continue to enhance our amenities to make your stay even more special. Would you like to book a similar room for your next visit or explore our other themed rooms?"
+11,Exceptional,1 July 2019,Stephen,United Kingdom,10.0,"Nothing,
+
+Everything- great to have a whole property for less than the price of a hotel",Leisure trip~People with friends~Four-Bedroom House~Stayed 2 nights~Submitted via mobile,stephen1@example.com,No Preference,No Preference,No Preference,No Preference,No Preference,No Preference,No Preference,No Membership,40,1,Neutral,"Sentiment: Positive
+
+Response: Thank you for choosing our property and appreciating the value for money. We're glad you enjoyed having the whole property to yourself at an affordable price. If you're looking to book again or recommend us to friends and family, we'd be happy to offer discounts or special promotions. What type of accommodations or services would you like to see us offer in the future to make your stay even more enjoyable?"
+12,Good,1 February 2020,Lady,United Kingdom,7.5,"Would have like more coffee and some tea available in the room,
+
+Bath a bit high to get out of, otherwise good comfortable room",Leisure trip~People with friends~Suite~Stayed 1 night~Submitted via mobile,lady1@example.com,vegan menu,gym access,No Preference,No Preference,No Preference,No Preference,luxury,Platinum Membership,33,1,Neutral,"Sentiment: Neutral
+
+The guest has provided a mixed review, mentioning both a positive aspect (comfortable room) and a few areas for improvement (limited coffee and tea options, high bath). 
+
+Response: Thank you for sharing your feedback about your stay. We're glad you found the room comfortable. We apologize for not meeting your expectations regarding in-room beverages and will consider adding more coffee and tea options. Additionally, we'll look into making our bathrooms more accessible. Would you like us to provide"
+13,Very good,1 August 2020,Felix,Netherlands,8.0,"Room is a bit dull. Some wall decorations or a plant would make the room more enjoyable.,
+
+Unlike most B&B's it has an equiped kitchen.",Leisure trip~Solo traveller~Deluxe Studio~Stayed 1 night,felix1@example.com,vegan menu,gym access,yoga classes,card payments,wedding arrangements,room with balcony,luxury,Golden Membership,40,3,Neutral,"Sentiment: Neutral/Negative (The guest has provided a mixed review, mentioning both a positive aspect and a suggestion for improvement)
+
+Response: Thank you for sharing your thoughts about your stay. We appreciate your suggestion to enhance the room's ambiance with wall decorations or plants, and we will consider this for future improvements. On a positive note, we're glad you found our equipped kitchen to be a valuable amenity, unlike many other B&Bs. If you have any other suggestions or preferences for your"
+14,Superb,5 July 2021,Luciano,Sweden,9.0,The breakfast should be better for that hotel level.,Business trip~Family with young children~Superior Double Room with Sofa Bed~Stayed 6 nights,luciano1@example.com,No Preference,No Preference,No Preference,No Preference,No Preference,No Preference,No Preference,No Membership,30,1,Negative,"Sentiment: Negative
+
+Response: Sorry to hear that our breakfast didn't meet your expectations. We understand that a high-quality breakfast is essential for a hotel of our level, and we'll take your feedback into consideration to improve our culinary services. We'd like to know more about what you were looking for in a breakfast experience. Could you please provide more details so we can enhance our offerings to better meet your needs? Additionally, we'd like to offer you a complimentary upgrade to our premium breakfast package"
+15,Exceptional,7 October 2020,Claudia,Austria,10.0,"The B&B is located just next to Place Jourdan, so there are various options for dinner in the evening. The family is super nice and helpful and the breakfast is prepared in advance so everything is super COVID-safe!",Business trip~Solo traveller~Standard Double Room~Stayed 2 nights,claudia1@example.com,No Preference,No Preference,No Preference,digital wallets,No Preference,No Preference,luxury,Platinum Membership,32,1,Neutral,"Sentiment: Positive
+
+Response: Thank you for appreciating our convenient location and the efforts we've made to ensure a safe and enjoyable stay. We're glad you enjoyed the local dinner options and our COVID-safe breakfast preparations. Our family is always happy to help, and we're thrilled you felt welcome. If you're planning to return to the area, we'd be delighted to have you stay with us again and explore more of what our neighborhood has to offer. Would you like some recommendations for your"
+16,Excellent,15 May 2019,Derek,United Kingdom,9.6,"Nothing,
+
+The peacefulness, the spectacular decor, the kindness of the hosts, nothing was to much trouble",Leisure trip~Couple~Junior Suite~Stayed 2 nights~Submitted via mobile,derek1@example.com,No Preference,No Preference,yoga classes,card payments,wedding arrangements,suite room,value for money,No Membership,31,1,Neutral,"Sentiment: Positive
+
+Response: Thank you so much for your heartfelt appreciation of our hotel's ambiance, decor, and service. We're thrilled to hear that our hosts made you feel welcome and that we could provide you with a peaceful stay. We're glad you enjoyed the spectacular decor and the tranquil atmosphere. If you're looking to experience more of our hospitality, we invite you to explore our loyalty program or return for another stay. Your comfort and satisfaction are our top priority, and we can't"
+17,Exceptional,28 December 2020,Adilson,Netherlands,10.0,"Nothing!,
+
+Perfect! Near the central station and another facilities",Leisure trip~Couple~Deluxe Double Room with Bath~Stayed 1 night~Submitted via mobile,adilson1@example.com,No Preference,No Preference,No Preference,No Preference,No Preference,suite room,No Preference,No Membership,36,1,Neutral,"Sentiment: Positive
+
+Response: Thank you for choosing our hotel and for taking the time to share your feedback. We're thrilled to hear that our location, near the central station and other facilities, met your needs. We're glad you had a perfect stay with us! If you're planning another trip, we'd be happy to help you book again and explore our loyalty program for exclusive benefits."
+18,Lovely break in a lovely area. Car absolutely required.,1 August 2018,Anonymous,United Kingdom,10.0,"Nothing :-),
+
+Lovely area, lovely house, lovely hosts, a very rural area. Dinant 13 miles (20 km) to the North East is beautiful, a must see, drive along the river from Givet (6 miles (10 km) to the South East) to have the best experience.Thank you so much for your warm welcome and lovely stay. We would all love to visit again.",Leisure trip~Family with young children~Four-Bedroom House~Stayed 7 nights,anonymous1@example.com,dinner buffet,tennis court,spa treatments,cash only,wedding arrangements,No Preference,budget-friendly,No Membership,29,2,Neutral,"Sentiment: Positive
+
+Response: Thank you so much for your kind words and for appreciating the lovely area, our home, and our hospitality. We're thrilled to hear that you enjoyed your stay and the surrounding rural landscape. Dinant and the river drive from Givet are indeed must-see attractions. We'd be delighted to welcome you back again and provide you with more recommendations for exploring the region. Would you like us to suggest more local hidden gems for your next visit?"
+19,Christmas stay,26 December 2019,Nathanael,Belgium,9.0,"The stains on the floor in the room because of other customers ... .,
+
+Everything",Leisure trip~Couple~Design Room~Stayed 2 nights~Submitted via mobile,nathanael1@example.com,dinner buffet,gym access,spa treatments,cash only,conference facilities,suite room,luxury,Platinum Membership,36,1,Negative,"Sentiment: Negative
+
+Response: Sorry to hear that the condition of your room didn't meet your expectations, particularly with the stains on the floor. We understand that cleanliness is a top priority, and we fell short in your case. We will work on improving our housekeeping services to prevent such issues in the future. Would you like us to follow up with you regarding any further concerns or to offer a complimentary upgrade on your next stay? Additionally, we'd appreciate any suggestions you might have on how"

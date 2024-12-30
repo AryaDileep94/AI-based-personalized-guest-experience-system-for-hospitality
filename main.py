@@ -4,8 +4,6 @@ import faker
 import random
 from collections import defaultdict
 
-
-
 # Load the dataset
 data = pd.read_csv(r"C:\Users\user\Guest personalization system using AI\archive\booking_reviews copy.csv")
 print(data.head())
@@ -19,7 +17,7 @@ fake = faker.Faker()
 data = pd.read_csv(r"C:\Users\user\Guest personalization system using AI\archive\booking_reviews copy.csv")
 
 # Check for missing values in the 'reviewed_by' column
-print(data['reviewed_by'].isnull().sum())  # Display how many missing values
+print(data['reviewed_by'].isnull().sum())  
 
 # Replace missing values in 'reviewed_by' with random names
 data['reviewed_by'] = data['reviewed_by'].apply(lambda x: x if pd.notnull(x) else fake.name())
@@ -74,7 +72,7 @@ email_counts = defaultdict(int)
 # Function to generate unique email IDs
 def generate_unique_email(name):
     if pd.notnull(name):  # Check if name is not null
-        clean_name = name.lower().replace(" ", ".")  # Replace spaces with dots
+        clean_name = name.lower().replace(" ", ".") 
         email_counts[clean_name] += 1  # Increment the count for this name
         return f"{clean_name}{email_counts[clean_name]}@example.com"  # Append count and domain
     return "unknown@example.com"  # Default for missing names
@@ -165,12 +163,6 @@ updated_dataset_path = "updated_with_detailed_preferences_and_no_preference.csv"
 df.to_csv(updated_dataset_path, index=False)
 
 print(f"Preferences updated with details and 'No Preference' introduced. Dataset saved to {updated_dataset_path}.")
-
-
-
-
-
-
 
 
 
