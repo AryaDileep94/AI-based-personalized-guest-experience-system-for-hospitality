@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 
-# Set up logging of alert
+# Set up logging for tracking alerts in the terminal
 logging.basicConfig(level=logging.INFO)
 
 # Load API key and email credentials
@@ -16,30 +16,30 @@ API_KEY = os.getenv('GROQ_API_KEY')
 EMAIL_USER = os.getenv('EMAIL_USER')
 EMAIL_PASS = os.getenv('EMAIL_PASS')
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = int(os.getenv('EMAIL_PORT',587))
-
-#Checking if API_KEY and email credentials are loaded correctly
-print(f"API Key: {API_KEY}")
-print(f"Email User: {EMAIL_USER}")
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
 
 # Groq API URL for LLaMA 3.3 model
 API_URL = "https://api.groq.com/openai/v1/chat/completions"
 
-# Creating the prompt template for LLaMA 3.3 model and we are using few-shot prompting and CoT
+# Prompt template for LLM analysis. We are using fewshot prompting and CoT prompting combined
 PROMPT_TEMPLATE = """
-You are a helpful assistant analyzing hotel reviews and guest preferences. The review below contains guest feedback and preference details.
-Analyze the feedback, correlate it with guest preferences, and determine if the sentiment is positive, neutral, or negative.
-Provide a response based on the sentiment, suggest improvements if necessary, and ensure the response addresses specific preferences.
+You are a helpful assistant analyzing hotel reviews and guest preferences. The review below contains guest feedback and preference details. Analyze the feedback, correlate it with guest preferences, and determine if the sentiment is positive, neutral, or negative. Provide a personalized and empathetic response tailored for the guest.
 
+Examples:
 Positive Feedback Example:
 Feedback: The spa was amazing, and the staff were very polite.
 Preferences: Wellness
-Response: Thank you for appreciating our wellness services! We’re glad you enjoyed your stay. Would you like to explore our loyalty program?
+Response: Thank you for appreciating our wellness services! We’re thrilled you enjoyed your stay. Next time, consider trying our complimentary yoga sessions to enhance your wellness experience.
 
 Negative Feedback Example:
 Feedback: The room was dirty, and the AC didn’t work.
 Preferences: Room Preferences, Maintenance
-Response: Sorry to hear that. We will work on improving room cleanliness and maintenance. Would you like assistance with this?
+Response: We sincerely apologize for the inconvenience caused by room cleanliness and AC issues. We’ve shared your feedback with our housekeeping and maintenance teams. As a gesture of goodwill, we’d like to offer a complimentary room upgrade during your next stay.
+
+Neutral Feedback Example:
+Feedback: The check-in process was okay, but it could be faster.
+Preferences: General
+Response: Thank you for your feedback! We’re always looking to improve our check-in experience. On your next visit, feel free to use our express check-in feature for a quicker process.
 
 Review: {review_text}
 Preferences: {preferences}
@@ -48,35 +48,84 @@ Sentiment and Response:
 
 # Function to send email alerts
 def send_email_alert(to_email, subject, body):
+    """
+    Sends an email alert to the specified email address.
+    """
     try:
-        # Create email message
         msg = MIMEMultipart()
         msg['From'] = EMAIL_USER
         msg['To'] = to_email
         msg['Subject'] = subject
         msg.attach(MIMEText(body, 'plain'))
 
-        # Establish connection to the email server
         with smtplib.SMTP(EMAIL_HOST, EMAIL_PORT) as server:
-            server.starttls()  # Upgrade connection to secure
+            server.starttls()
             server.login(EMAIL_USER, EMAIL_PASS)
             server.sendmail(EMAIL_USER, to_email, msg.as_string())
         print(f"Email alert sent to {to_email}: {subject}")
     except Exception as e:
         print(f"Failed to send email alert: {e}")
 
-
-# Function to analyze the review using the Groq LLaMA model
+# Function to analyze the review using the LLM (llama 3.3 70b versatile model)
 def analyze_review_with_alert(review_text, preferences):
+    """
+    Uses LLM to analyze a review and generate sentiment, response, and department alert.
+    """
     prompt = PROMPT_TEMPLATE.format(review_text=review_text, preferences=", ".join(preferences))
-    
-    # Prepare the payload for the API request
+
     messages = [{"role": "user", "content": prompt}]
     data = {
-        "model": "llama-3.3-70b-versatile", 
+        "model": "llama-3.3-70b-versatile",
         "messages": messages,
         "temperature": 0.5,
-        "max_tokens": 70,
+        "max_tokens": 100,
+        "n": 1
+    }
+
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+    # send POST request to the groq API for inference
+    response = requests.post(API_URL, headers=headers, json=data)
+
+    if response.status_code == 200:
+        result_text = response.json()["choices"][0]["message"]["content"]
+
+        # Determine sentiment based on the response
+        sentiment = "Negative" if "apologize" in result_text else ("Positive" if "thank you" in result_text.lower() else "Neutral")
+
+        # Generate department alert if sentiment is negative
+        alert = None
+        if sentiment == "Negative":
+            alert = extract_department_alert_llm(review_text)
+            if alert:
+                email_body = f"Alert: {alert}\n\nReview: {review_text}"
+                send_email_alert("hotel.email@example.com", "Hotel Review Alert", email_body)
+
+        return sentiment, result_text.strip(), alert
+
+    else:
+        print(f"Error {response.status_code}: {response.json()}")
+        return None, None, None
+
+# Function to extract department responsible for negative feedback using LLM
+def extract_department_alert_llm(review_text):
+    """
+    Uses LLM to identify the department responsible for addressing feedback.
+    """
+    prompt = f"""
+You are an assistant tasked with identifying the department responsible for addressing guest feedback based on the review below. Analyze the feedback and provide the specific department name (e.g., Dining, Sports, Wellness, etc.).
+
+Feedback: {review_text}
+Department Responsible:
+"""
+    messages = [{"role": "user", "content": prompt}]
+    data = {
+        "model": "llama-3.3-70b-versatile",
+        "messages": messages,
+        "temperature": 0.5,
+        "max_tokens": 20,
         "n": 1
     }
 
@@ -85,103 +134,60 @@ def analyze_review_with_alert(review_text, preferences):
         "Content-Type": "application/json"
     }
 
-    # Send POST request to the Groq API for inference
     response = requests.post(API_URL, headers=headers, json=data)
 
     if response.status_code == 200:
-        result_text = response.json()["choices"][0]["message"]["content"]
-        
-        # Determine sentiment based on generated response
-        sentiment = "Negative" if "Sorry to hear that" in result_text else ("Positive" if "Thank you!" in result_text else "Neutral")
-        
-        # Extract department alert if the feedback is negative
-        alert = None
-        if sentiment == "Negative":
-            alert = extract_department_alert(review_text)
-            
-            # Send email alert with specific details
-            if alert:
-                email_body = f"Alert: {alert}\n\nReview: {review_text}"
-                send_email_alert("hotel.email@example.com", "Hotel Review Alert", email_body)
-        
-        return sentiment, result_text, alert
-    
+        return response.json()["choices"][0]["message"]["content"].strip()
     else:
-        # Debugging: Print the error details to help troubleshoot
         print(f"Error {response.status_code}: {response.json()}")
-        return None, None, None
-
-# Function to extract the department responsible for negative feedback
-def extract_department_alert(review_text):
-    review_text = review_text.lower()
-    if "room" in review_text:
-        return "Room preference department needs attention about room conditions."
-    elif "dining" in review_text or "food" in review_text:
-        return "Dining department needs improvement regarding food quality."
-    elif "ac" in review_text or "clean" in review_text:
-        return "Maintenance and housekeeping need to be notified about AC or cleanliness issues."
-    elif "spa" in review_text or "wellness" in review_text:
-        return "Wellness department needs to address feedback on spa services."
-    elif "pricing" in review_text or "expensive" in review_text:
-        return "Pricing department needs to review customer concerns about rates."
-    elif "payment" in review_text:
-        return "Payment options department needs attention."
-    elif "event" in review_text:
-        return "Event management department needs improvement."
-    elif "sport" in review_text:
-        return "Sports facilities department needs attention."
-    else:
         return "General feedback - Further investigation needed."
 
-# UI feedback (for testing purposes)
-def display_feedback_to_guest(sentiment, response_text):
-    if sentiment == "Negative":
-        print(f"Sentiment: {sentiment}")
-        print(f"Response: {response_text}")
-        print(f"Department alert: This issue has been flagged for review.")
-    elif sentiment == "Positive":
-        print(f"Sentiment: {sentiment}")
-        print(f"Response: {response_text}")
-    else:
-        print(f"Sentiment: {sentiment}")
-        print(f"Response: {response_text}")
+# UI feedback function
+def display_feedback_to_guest(sentiment,response_text):
+    """
+    Displays sentiment and response text for the guest.
+    """
+    print(f"Sentiment: {sentiment}")
+    print(f"Response: {response_text}\n")
 
-# Load your dataset
+# Load dataset for processing
 dataset = pd.read_csv(r"C:\Users\user\Guest personalization system using AI\updated_with_detailed_preferences_and_no_preference.csv")
 
-# Limit dataset to first 20 entries
-dataset = dataset.iloc[:20]
+# Limit dataset to first 5 entries
+dataset = dataset.iloc[:5]
 
-# Adding columns for sentiment and suggestion
+# Adding columns for sentiment, suggestion, and department alert
 dataset['sentiment'] = ''
 dataset['suggestion'] = ''
+dataset['department_alert'] = ''
 
-# Loop over the first 20 reviews and process them
+# Process each review in the dataset
 for index, row in dataset.iterrows():
     review_text = row['review_text']
-    
-    # Extract preferences from columns (assuming these are columns in the dataset)
-    preferences = []
-    for col in ['dining', 'sports', 'wellness', 'payment options', 'events', 'pricing', 'room preferences']:
-        if row.get(col, '').strip().lower() == 'yes':  # Assuming preference is marked as 'yes'
-            preferences.append(col.capitalize())
-    
-    # Call the analysis function
+
+    # Collect preferences from relevant columns
+    preferences = [row[col].strip() for col in ['Dining', 'Sports', 'Wellness', 'Payment Options', 'Events', 'Pricing', 'Room Preference', 'Membership Status'] if pd.notna(row[col])]
+
+    # Analyze review
     sentiment, response_text, department_alert = analyze_review_with_alert(review_text, preferences)
 
-    # Display the results in the UI for the guest
-    display_feedback_to_guest(sentiment, response_text)
-
-    # Log the department alert to the backend (e.g., log or notify the department responsible)
-    if department_alert:
-        logging.info(f"Alert to Backend: {department_alert}")
-
-    # Update dataset with sentiment and suggestion
+    # Update dataset
     dataset.at[index, 'sentiment'] = sentiment
-    dataset.at[index, 'suggestion'] = response_text
+    dataset.at[index, 'suggestion'] = response_text  # Add full suggestion text generated by LLM
+    dataset.at[index, 'department_alert'] = department_alert if department_alert else "No specific alert"
 
-# Save the updated dataset with sentiment labels
-dataset.to_csv("Sentiment_updated_hotel_reviews.csv", index=False)
+    # Print outputs for debugging
+    display_feedback_to_guest(sentiment, response_text)
+    print(f"Row {index + 1} Analysis:")
+    print(f"Review: {review_text}")
+    print(f"Preferences: {preferences}")
+    print(f"Sentiment: {sentiment}")
+    print(f"Response: {response_text}")
+    print(f"Department Alert: {department_alert}")
+    print("-" * 50)
+
+# Save the updated dataset
+dataset.to_csv("Sentiment_updated_hotel_reviews_with_alerts.csv", index=False)
 
 
 
