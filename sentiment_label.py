@@ -6,6 +6,8 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
+import sqlite3
+from datetime import datetime
 
 # Set up logging for tracking alerts in the terminal
 logging.basicConfig(level=logging.INFO)
@@ -109,7 +111,18 @@ def analyze_review_with_alert(review_text, preferences):
     else:
         print(f"Error {response.status_code}: {response.json()}")
         return None, None, None
-
+# Function to log sentiment analysis to the Reviews table
+def log_sentiment(guest_id, review, sentiment, suggestion):
+    try:
+        cursor.execute('''
+        INSERT INTO Reviews (Guest_ID, Review, Sentiment, Suggestion)
+        VALUES (?, ?, ?, ?)
+        ''', (guest_id, review, sentiment, suggestion))
+        conn.commit()
+        print(f"[LOG] Sentiment logged: Guest_ID={guest_id}, Sentiment={sentiment}, Suggestion={suggestion}")
+    except sqlite3.Error as e:
+        print(f"[ERROR] Unable to log sentiment: {e}")
+        
 # Function to extract department responsible for negative feedback using LLM
 def extract_department_alert_llm(review_text):
     """
@@ -176,9 +189,18 @@ for index, row in dataset.iterrows():
     dataset.at[index, 'sentiment'] = sentiment
 
     #Extract the suggestion by removing "Sentiment:" and "Response:"
-    suggestion = response_text.split("Response:")[1].strip()  # Take only the part after "Response:"
+    #suggestion = response_text.split("Response:")[1].strip()  # Take only the part after Response:
 
-    dataset.at[index, 'suggestion'] = suggestion  # Store the suggestion without "Response:"
+    #dataset.at[index, 'suggestion'] = suggestion  # Store the suggestion without "Response:"
+    if response_text:
+       if "Response:" in response_text:
+           suggestion = response_text.split("Response:")[1].strip()  # Extract the suggestion
+       else:
+           suggestion = "No suggestion available"
+    else:
+        suggestion = "No response received"
+
+    dataset.at[index, 'suggestion'] = suggestion
 
     dataset.at[index, 'department_alert'] = department_alert if department_alert else "No specific alert"
 
@@ -193,17 +215,25 @@ for index, row in dataset.iterrows():
     print(f"Department Alert: {department_alert}")
     print("-" * 50)
 
+# Establish database connection
+conn = sqlite3.connect(r"C:\Users\user\Guest personalization system using AI\hotel_database.db", check_same_thread=False)
+cursor = conn.cursor()
+
+# Function to log interactions
+def log_interaction(guest_id, activity, rating=None, time_spent=None):
+    """
+    Logs a guest's interaction in the Interactions table.
+    """
+    try:
+        cursor.execute('''
+        INSERT INTO Interactions (Guest_ID, Activity, Rating, Time_Spent, Timestamp)
+        VALUES (?, ?, ?, ?, ?)
+        ''', (guest_id, activity, rating, time_spent, datetime.now()))
+        conn.commit()
+        logging.info(f"[LOG] Interaction logged: Guest_ID={guest_id}, Activity={activity},Rating={rating},Time_spent={time_spent},Timestamp={datetime.now()}")
+    except sqlite3.Error as e:
+        logging.error(f"[ERROR] Failed to log interaction: {e}")
+
+
 # Save the updated dataset
 dataset.to_csv("Sentiment_updated_hotel_reviews_with_alerts.csv", index=False)
-
-
-
-
-
-
-
-
-
-
-
-
