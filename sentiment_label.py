@@ -8,6 +8,9 @@ from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 import sqlite3
 from datetime import datetime
+from slack_sdk.webhook import WebhookClient
+import streamlit as st
+
 
 # Set up logging for tracking alerts in the terminal
 logging.basicConfig(level=logging.INFO)
@@ -69,18 +72,26 @@ def send_email_alert(to_email, subject, body):
     except Exception as e:
         print(f"Failed to send email alert: {e}")
 
-# Function to analyze the review using the LLM (llama 3.3 70b versatile model)
-def analyze_review_with_alert(review_text, preferences):
-    """
-    Uses LLM to analyze a review and generate sentiment, response, and department alert.
-    """
-    prompt = PROMPT_TEMPLATE.format(review_text=review_text, preferences=", ".join(preferences))
+# Function to send Slack alerts
+def send_slack_notification(message):
+    try:
+        webhook = WebhookClient("https://hooks.slack.com/services/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")
+        response = webhook.send(text=message)
+        if response.status_code == 200:
+            print("Slack notification sent successfully!")
+        else:
+            print(f"Failed to send Slack notification. Response: {response.body}")
+    except Exception as e:
+        print(f"Error while sending Slack notification: {e}")
 
+# Function to analyze the review using the LLM
+def analyze_review_with_alert(review_text, preferences):
+    prompt = PROMPT_TEMPLATE.format(review_text=review_text, preferences=", ".join(preferences))
     messages = [{"role": "user", "content": prompt}]
     data = {
         "model": "llama-3.3-70b-versatile",
         "messages": messages,
-        "temperature": 0.5,
+        "temperature": 0.9,
         "max_tokens": 100,
         "n": 1
     }
@@ -89,27 +100,25 @@ def analyze_review_with_alert(review_text, preferences):
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
     }
-    # send POST request to the groq API for inference
-    response = requests.post(API_URL, headers=headers, json=data)
 
+    response = requests.post(API_URL, headers=headers, json=data)
     if response.status_code == 200:
         result_text = response.json()["choices"][0]["message"]["content"]
-
         # Determine sentiment based on the response
         sentiment = "Negative" if "apologize" in result_text else ("Positive" if "thank you" in result_text.lower() else "Neutral")
-
-        # Generate department alert if sentiment is negative
-        alert = None
+        # Generate department alert for negative sentiment
+        department_alert = None
         if sentiment == "Negative":
-            alert = extract_department_alert_llm(review_text)
-            if alert:
-                email_body = f"Alert: {alert}\n\nReview: {review_text}"
+            department_alert = extract_department_alert_llm(review_text)
+            if department_alert:
+                email_body = f"Alert: {department_alert}\n\n*Guest ID:* {st.session_state.get('guest_id', 'N/A')}\nReview: {review_text}"
                 send_email_alert("hotel.email@example.com", "Hotel Review Alert", email_body)
+                slack_message = f"🚨 *Negative Feedback Alert* 🚨\n\n*Guest ID:* {st.session_state.get('guest_id', 'N/A')}\n*Review:* {review_text}\n*Department Responsible:* {department_alert}"
+                send_slack_notification(slack_message)
 
-        return sentiment, result_text.strip(), alert
-
+        return sentiment, result_text.strip(), department_alert
     else:
-        print(f"Error {response.status_code}: {response.json()}")
+        logging.error(f"Error {response.status_code}: {response.json()}")
         return None, None, None
 # Function to log sentiment analysis to the Reviews table
 def log_sentiment(guest_id, review, sentiment, suggestion):
