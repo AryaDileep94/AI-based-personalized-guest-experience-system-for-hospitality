@@ -12,6 +12,52 @@ The AI-driven Guest Personalization System is designed to enhance the guest expe
 - **Streamlit-based UI**: Intuitive web interface for review submission and sentiment results visualization.
 - **Personalized Recommendations**: Provides tailored suggestions based on guest preferences and feedback.
 
+
+## System Architecture
+
+The system's architecture illustrates how different components interact to deliver a seamless and efficient guest experience.
+
+                       +-----------------------+
+                       |    Guest User Interface|
+                       |  (Frontend)            |
+                       +-----------------------+
+                               |
+            User Input/Interaction (Preferences, Feedback)
+                               |
+                       +-----------------------+
+                       |     API Layer          |
+                       |  (Communication Layer) |
+                       +-----------------------+
+                               |
+             +----------------+-----------------+
+             |                                  |
+       +----------------+                +---------------------+
+       | Business Logic |                | User Interaction    |
+       | (Processing,    |                | Manager             |
+       | Data Handling)  |                | (Track Interactions)|
+       +----------------+                +---------------------+
+             |                                  |
+   +-----------------+                    +-----------------------+
+   | Sentiment       |                    | Recommendation Engine  |
+   | Analysis Module |                    | (Personalization)      |
+   +-----------------+                    +-----------------------+
+             |                                  |
+     +----------------+                 +---------------------+
+     |   Feedback     |                 | Guest Preferences   |
+     |   Data Storage |                 | & Historical Data    |
+     +----------------+                 +---------------------+
+             |                                  |
+   +----------------+                    +-----------------------+
+   |     Database   |<------------------>|     AI Models         |
+   |  (Guest Data,  |                    | - Sentiment Analysis  |
+   |   Feedback,    |                    | - Recommendation      |
+   |  Interactions) |                    |    Engine             |
+   +----------------+                    +-----------------------+
+
+---
+
+## Project Structure
+
 # To setup the project locally
 ## Installation
 1. Clone the repository:
