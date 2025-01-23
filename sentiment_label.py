@@ -22,7 +22,11 @@ EMAIL_USER = os.getenv('EMAIL_USER')
 EMAIL_PASS = os.getenv('EMAIL_PASS')
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
-WEBHOOK_URL = os.getenv("webhook_URL")
+SLACK_WEBHOOK_URL = os.getenv("WEBHOOK_URL")
+print(f"Loaded Webhook URL: {SLACK_WEBHOOK_URL}")
+if not SLACK_WEBHOOK_URL:
+    print("Error: WEBHOOK_URL is not set.")
+    exit(1)
 
 # Groq API URL for LLaMA 3.3 model
 API_URL = "https://api.groq.com/openai/v1/chat/completions"
@@ -76,7 +80,7 @@ def send_email_alert(to_email, subject, body):
 # Function to send Slack alerts
 def send_slack_notification(message):
     try:
-        webhook = WebhookClient(WEBHOOK_URL)
+        webhook = WebhookClient(SLACK_WEBHOOK_URL)
         response = webhook.send(text=message)
         if response.status_code == 200:
             print("Slack notification sent successfully!")
