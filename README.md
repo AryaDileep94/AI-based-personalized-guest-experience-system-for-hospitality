@@ -147,13 +147,10 @@ To set up the project locally, follow these steps:
 
 ---
 
-## License
+## Conclusion
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.  
-
+This system aims to optimize the guest experience by leveraging AI to process feedback, provide actionable insights, and offer personalized suggestions. It is scalable, modular, and integrates easily with existing hospitality management systems.
 ---
 
-Thank you for using the AI-Based Personalized Guest Experience System for Hospitality! We hope it enhances guest satisfaction and streamlines operations at your establishment.
 
----
 
