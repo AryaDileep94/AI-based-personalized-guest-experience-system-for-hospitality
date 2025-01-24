@@ -1,56 +1,159 @@
-# AI-based-personalized-guest-experience-system-for-hospitality
-Welcome to the AI-driven Guest Personalization System! This system leverages Large Language Models (LLMs) and Sentiment Analysis to enhance the guest experience in the hospitality industry. By understanding and analyzing guest feedback, the system provides personalized recommendations and improves overall guest satisfaction.
+# AI-Based Personalized Guest Experience System for Hospitality
 
-The AI-driven Guest Personalization System is designed to enhance the guest experience by automatically processing and analyzing feedback using advanced sentiment analysis. It goes beyond just understanding the words by capturing the emotions and preferences behind each guest’s response. Based on this analysis, the system offers personalized recommendations that cater specifically to individual guest needs, ensuring a tailored experience every time. In real-time, hotel staff and management receive actionable insights, enabling them to make quick and informed decisions that improve guest satisfaction. The system is also scalable and modular, making it easy to integrate with different hospitality businesses and CRM systems, allowing for seamless adoption across various platforms.
+Welcome to the AI-driven Guest Personalization System! This project leverages **Large Language Models (LLMs)** and **Sentiment Analysis** to enhance guest experiences in the hospitality industry. By understanding and analyzing guest feedback, it provides personalized recommendations, real-time alerts, and actionable insights to improve guest satisfaction.
+
+---
+
+## Project Overview
+
+The **AI-driven Guest Personalization System** is designed to analyze guest feedback and offer tailored recommendations based on individual preferences and sentiments. It captures emotions and preferences behind each guest’s response, enabling hotels to deliver a more personalized and memorable experience.  
+
+Hotel staff and management receive real-time insights and alerts, helping them address guest concerns proactively. The system is scalable and modular, ensuring seamless integration with different Customer Relationship Management (CRM) platforms.
+
+---
 
 ## Features
 
 - **Sentiment Analysis**: Automatically classifies guest feedback into positive, neutral, or negative categories.
-- **Real-time Alerts**: Sends email notifications to hotel management for negative feedback, enabling prompt action.
-- **Customizable Preferences**: Allows hotels to define specific aspects of the guest experience (e.g., dining, wellness) for focused analysis.
+- **Real-Time Alerts**: Sends email notifications to hotel management for negative feedback, enabling prompt action.
+- **Customizable Preferences**: Allows hotels to define specific guest experience aspects (e.g., dining, wellness) for focused analysis.
+- **Streamlit-Based UI**: Intuitive web interface for review submission and sentiment visualization.
+- **Personalized Recommendations**: Offers tailored suggestions based on guest preferences and feedback.
 - **Scalable and Modular Design**: Easily integrates with various CRM systems for seamless adoption across platforms.
-- **Streamlit-based UI**: Intuitive web interface for review submission and sentiment results visualization.
-- **Personalized Recommendations**: Provides tailored suggestions based on guest preferences and feedback.
 
+---
+
+## System Architecture
+
+The system's architecture illustrates how different components interact to deliver a seamless and efficient guest experience.
+
+```plaintext
+                       +-----------------------+
+                       |    Guest User Interface|
+                       |  (Frontend)            |
+                       +-----------------------+
+                               |
+            User Input/Interaction (Preferences, Feedback)
+                               |
+                       +-----------------------+
+                       |     API Layer          |
+                       |  (Communication Layer) |
+                       +-----------------------+
+                               |
+             +----------------+-----------------+
+             |                                  |
+       +----------------+                +---------------------+
+       | Business Logic |                | User Interaction    |
+       | (Processing,    |                | Manager             |
+       | Data Handling)  |                | (Track Interactions)|
+       +----------------+                +---------------------+
+             |                                  |
+   +-----------------+                    +-----------------------+
+   | Sentiment       |                    | Recommendation Engine  |
+   | Analysis Module |                    | (Personalization)      |
+   +-----------------+                    +-----------------------+
+             |                                  |
+     +----------------+                 +---------------------+
+     |   Feedback     |                 | Guest Preferences   |
+     |   Data Storage |                 | & Historical Data    |
+     +----------------+                 +---------------------+
+             |                                  |
+   +----------------+                    +-----------------------+
+   |     Database   |<------------------>|     AI Models         |
+   |  (Guest Data,  |                    | - Sentiment Analysis  |
+   |   Feedback,    |                    | - Recommendation      |
+   |  Interactions) |                    |    Engine             |
+   +----------------+                    +-----------------------+
+```
+
+---
 
 ## Project Structure
 
-# To setup the project locally
+```plaintext
+├── guest_UI.py           # Streamlit-based frontend for user interaction.
+├── sentiment_label.py     # Backend for sentiment analysis and email alerts.
+├── main.py                # Prepares the dataset for analysis and feature engineering.
+├── eda.py                 # Performs Exploratory Data Analysis (EDA) on the dataset.
+├── requirements.txt       # Lists all project dependencies.
+├── .groqenv               # Contains API keys and email credentials (excluded from Git).
+```
+
+---
+
+## Technologies Used
+
+- **Python**  
+- **Streamlit**  
+- **Large Language Models (LLMs)**: Utilizing `llama-3.3-70b-versatile` for advanced sentiment analysis.  
+- **SMTP for Email Alerts**: Uses Python's `smtplib` and `email` modules for secure communication.  
+- **Groq API Key**: Powers additional integrations.  
+
+---
+
 ## Installation
-1. Clone the repository:
+
+To set up the project locally, follow these steps:  
+
+1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/AryaDileep94/AI-based-personalized-guest-experience-system-for-hospitality
-   cd AI-based-personalized-guest-experience-system
-2. Install dependencies
+   git clone https://github.com/AryaDileep94/AI-based-personalized-guest-experience-system-for-hospitality.git
+   cd AI-based-personalized-guest-experience-system-for-hospitality
+   ```
+
+2. **Install Dependencies**:
+   ```bash
    pip install -r requirements.txt
-3. Create a .groqenv file in the root directory and add :
+   ```
+
+3. **Set Up Environment Variables**:
+   Create a `.groqenv` file in the project root directory with the following keys:
+   ```plaintext
    API_KEY=your_api_key
    EMAIL_HOST=smtp.gmail.com
    EMAIL_PORT=587
    EMAIL_USER=your_email@gmail.com
    EMAIL_PASS=your_email_password
-4. streamlit run guest_UI.py 
+   ```
 
-This system is designed to analyze guest feedback and provide suggestions in real-time.Alerts are sent to the hotel via email for every negative reviews along with the reason. As the model analyzes the review_text as well as the guest preferences, the system is able to provide more personalized suggestions and reccomendations. Hotel staff and management receive actionable insights in real time, helping them address issues proactively and custom services to individual needs. It can be easily integrated with existing CRM systems, making it adaptable to various hospitality businesses.
+4. **Run the Streamlit UI**:
+   ```bash
+   streamlit run guest_UI.py
+   ```
 
-# Project Structure
-1. guest_UI.py: The Streamlit-based frontend for user interaction.
-2. sentiment_label.py: Backend for performing sentiment analysis, handling email alerts and providing real-time sugestions in the UI
-3. main.py:Booking reviews dataset is prepared for analysis.Handling missing values, removed unwanted columns and added new columns which contains guest preferences.
-4. eda.py: simple EDA is performed on the cleaned dataset
-5. .groqenv: Contains sensitive API keys and email credentials (excluded from Git).
-6. requirements.txt: Lists all dependencies required for the project.
+---
 
-# Technologies Used
--Python
--Streamlit
--Groq API Key
--SMTP for email alerts(The email alert system leverages Python's built-in smtplib and email modules for secure SMTP communication. No additional installation is required unless you wish to use an external library such as yagmail, which can simplify email handling.)
--Large Language Models (LLMs) for advanced sentiment analysis (llama-3.3-70b-versatile)
-   
-  
-   
+## Usage
 
+1. **Prepare the Dataset**:  
+   Use `main.py` to process and clean the booking reviews dataset. Missing values will be handled, irrelevant columns removed, and new features (guest preferences) added.
 
+2. **Analyze Sentiments**:  
+   Run `sentiment_label.py` to classify reviews and generate email alerts for negative feedback.
 
+3. **Explore Data**:  
+   Use `eda.py` for simple exploratory data analysis on the cleaned dataset.
+
+4. **Launch the UI**:  
+   Run the `guest_UI.py` file to access the Streamlit-based web interface for submitting reviews and visualizing sentiment results.
+
+---
+
+## Key Functionalities
+
+- **Real-Time Feedback Analysis**: Analyzes guest feedback instantly and sends alerts for negative reviews.  
+- **Personalized Suggestions**: Combines review text and guest preferences to provide tailored recommendations.  
+- **Seamless CRM Integration**: Easily adapts to various CRM systems, making it suitable for different hospitality businesses.  
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.  
+
+---
+
+Thank you for using the AI-Based Personalized Guest Experience System for Hospitality! We hope it enhances guest satisfaction and streamlines operations at your establishment.
+
+---
 
