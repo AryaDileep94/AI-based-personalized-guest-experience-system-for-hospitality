@@ -68,19 +68,6 @@ The system's architecture illustrates how different components interact to deliv
 
 ---
 
-## Project Structure
-
-```plaintext
-├── guest_UI.py           # Streamlit-based frontend for user interaction.
-├── sentiment_label.py     # Backend for sentiment analysis and email alerts.
-├── main.py                # Prepares the dataset for analysis and feature engineering.
-├── eda.py                 # Performs Exploratory Data Analysis (EDA) on the dataset.
-├── requirements.txt       # Lists all project dependencies.
-├── .groqenv               # Contains API keys and email credentials (excluded from Git).
-```
-
----
-
 ## Technologies Used
 
 - **Python**  
