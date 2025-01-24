@@ -89,6 +89,62 @@ def send_slack_notification(message):
     except Exception as e:
         print(f"Error while sending Slack notification: {e}")
 
+# Function to generate recommendations for workers based on department
+def generate_worker_recommendations(department_name):
+    """
+    Generates recommendations for workers in the specified department.
+    """
+    prompt = f"""
+You are a helpful assistant tasked with providing personalized and guest-friendly recommendations for workers in the department responsible for addressing guest feedback. Your recommendations should feel conversational, actionable, and relevant to the specific department. Avoid generic training-related suggestions unless explicitly required.
+
+Here are examples of personalized recommendations:
+
+- Department: Dining
+  Recommendations:
+  1. "Would you like to try our continental and Chinese dishes, which are highly rated by our guests?"
+  2. "For a quieter dining experience, consider our private dining rooms or room service."
+  3. "We’ve added more vegan and allergen-free options to our menu—please let us know if you’d like to explore these choices."
+
+- Department: Housekeeping
+  Recommendations:
+  1. "To ensure your comfort, we offer daily room check-ins for cleaning and tidying. Let us know your preferred time!"
+  2. "Would you like fresh towels delivered to your room, or assistance organizing your belongings for a clutter-free space?"
+  3. "We also provide pillow menu options for a perfect night's sleep—would you like to explore them?"
+
+- Department: Front Desk
+  Recommendations:
+  1. "For a smoother check-in experience, we offer an express service—would you like us to guide you through it for your next stay?"
+  2. "Would you like assistance booking a taxi or planning an itinerary for nearby attractions?"
+  3. "We’re here 24/7 to assist with any requests—please let us know how we can make your stay more enjoyable."
+
+Based on the department mentioned below, provide **personalized and humanized recommendations** to improve the guest experience.
+
+Department: {department_name}
+Recommendations:
+"""
+    messages = [{"role": "user", "content": prompt}]
+    data = {
+        "model": "llama-3.3-70b-versatile",
+        "messages": messages,
+        "temperature": 0.7,
+        "max_tokens": 150,
+        "n": 1
+    }
+
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.post(API_URL, headers=headers, json=data)
+
+    if response.status_code == 200:
+        return response.json()["choices"][0]["message"]["content"].strip()
+    else:
+        print(f"Error {response.status_code}: {response.json()}")
+        return "Unable to generate recommendations at this time."
+
+
 # Function to analyze the review using the LLM
 def analyze_review_with_alert(review_text, preferences):
     prompt = PROMPT_TEMPLATE.format(review_text=review_text, preferences=", ".join(preferences))
@@ -116,15 +172,30 @@ def analyze_review_with_alert(review_text, preferences):
         if sentiment == "Negative":
             department_alert = extract_department_alert_llm(review_text)
             if department_alert:
-                email_body = f"Alert: {department_alert}\n\n*Guest ID:* {st.session_state.get('guest_id', 'N/A')}\nReview: {review_text}"
+                # Generate worker recommendations
+                recommendations = generate_worker_recommendations(department_alert)
+
+                # Send alerts
+                email_body = f"""🚨 *Negative Feedback Alert* 🚨\n\n
+                *GUEST_ID:* {st.session_state.get('guest_id', 'N/A')}
+                *REVIEW:* {review_text}
+                *DEPARTMENT RESPONSIBLE:* {department_alert}
+                *RECOMMENDATIONS:* {recommendations}
+                """
                 send_email_alert("hotel.email@example.com", "Hotel Review Alert", email_body)
-                slack_message = f"🚨 *Negative Feedback Alert* 🚨\n\n*Guest ID:* {st.session_state.get('guest_id', 'N/A')}\n*Review:* {review_text}\n*Department Responsible:* {department_alert}"
+                slack_message = f"""🚨 *Negative Feedback Alert* 🚨\n\n
+                *GUEST_ID:* {st.session_state.get('guest_id', 'N/A')}
+                *REVIEW:* {review_text}
+                *DEPARTMENT RESPONSIBLE:* {department_alert}
+                *RECOMMENDATIONS:* {recommendations}
+                """
                 send_slack_notification(slack_message)
 
         return sentiment, result_text.strip(), department_alert
     else:
         logging.error(f"Error {response.status_code}: {response.json()}")
         return None, None, None
+
 # Function to log sentiment analysis to the Reviews table
 def log_sentiment(guest_id, review, sentiment, suggestion):
     try:
