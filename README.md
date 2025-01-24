@@ -12,6 +12,9 @@ The AI-driven Guest Personalization System is designed to enhance the guest expe
 - **Streamlit-based UI**: Intuitive web interface for review submission and sentiment results visualization.
 - **Personalized Recommendations**: Provides tailored suggestions based on guest preferences and feedback.
 
+
+## Project Structure
+
 # To setup the project locally
 ## Installation
 1. Clone the repository:
